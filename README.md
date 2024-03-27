@@ -61,7 +61,7 @@ the example demonstrates a basic plugin that renders text. lets break it down.
 class JsonRendererTextPlugin extends JsonRendererPlugin
 ```
 
-after extending from this class, which is provided by the library itself, there are some methods that need to be overridden to decide the schema and rendering process of the widget. parameters passed can be nested or put in a flat level and validated using `JsonRendererValidator`. if the key is not passed, its not validated, allowing developers to go out of their way when needed.
+after extending from this class, which is provided by the library itself, there are some methods that need to be overridden to decide the schema and rendering process of the widget. parameters passed can be nested or put in a flat level and validated using `JsonRendererValidator`. if the key is not returned from `schema` getter, its not validated, allowing developers to go out of their way when needed.
 
 - after that, there is the type getter that needs to be overridden:
 
