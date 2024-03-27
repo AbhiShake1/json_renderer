@@ -4,7 +4,7 @@ this is an early stage of a proof-of-concept library that renders widgets based 
 
 ## how does it work?
 
-to begin with, you initialize the library and pass in the colors, components and other configurations.
+to begin with, you initialize the library and pass in the colors, components (AKA plugins) and other configurations.
 
 ```dart
 JsonRenderer.init(
