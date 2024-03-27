@@ -16,7 +16,7 @@ JsonRenderer.init(
 );
 ```
 
-*note that you can decide the schema yourself while creating the plugin widget*
+*note that you can decide the schema yourself while creating custom plugins*
 
 
 ### plugins
