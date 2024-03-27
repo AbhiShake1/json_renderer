@@ -21,7 +21,7 @@ JsonRenderer.init(
 
 ### plugins
 
-plugins can be passed during `JsonRenderer.init`, that are available through packages (future plan). also, new plugins can be created and added based on project requirements. plugins are special widgets that are compatible with `JsonWidget`. lets look at an example implementation of a custom plugin:
+plugins can be passed during `JsonRenderer.init`, that are available through packages (future plan). also, new plugins can be created and added based on project requirements. plugins are special widgets that `JsonWidget` uses to render based on defined `type`. lets look at an example implementation of a custom plugin:
 
 ```dart
 class JsonRendererTextPlugin extends JsonRendererPlugin {
