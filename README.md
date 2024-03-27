@@ -1,6 +1,6 @@
 # json renderer
 
-this is an early stage of a proof-of-concept library that renders widgets based on the schema that you create
+this is an early stage of a proof-of-concept library that renders widgets based on the schema that you define
 
 ## how does it work?
 
