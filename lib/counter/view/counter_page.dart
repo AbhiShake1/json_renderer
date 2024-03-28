@@ -39,6 +39,14 @@ class CounterView extends StatelessWidget {
               },
               {
                 'type': 'text',
+                'text': 'abcde',
+                'text_style': {
+                  'font_style': 'italic',
+                  'font_size': 36.0,
+                },
+              },
+              {
+                'type': 'text',
                 'text': 'abcd',
                 'text_style': {
                   'font_style': 'italic',
@@ -76,7 +84,7 @@ class JsonRenderer extends StatelessWidget {
     return _plugins.firstWhere(
       (p) => p.type == json['type'],
       orElse: () => throw Exception('type ${json['type']} not found'),
-    ).._state.params = json;
+    )..params = json;
   }
 }
 
@@ -106,19 +114,42 @@ class JsonRendererValidator {
   Map<String, JsonRendererValidator>? _map;
 }
 
-abstract class JsonRendererPlugin extends StatefulWidget {
-  JsonRendererPlugin({super.key});
-  final _JsonRendererPluginState _state = _JsonRendererPluginState();
+class Ref<T> {
+  Ref(this.current);
+
+  T? current;
+}
+
+abstract class JsonRendererPlugin extends StatelessWidget {
+  const JsonRendererPlugin({super.key});
   JsonRendererSchema get schema;
   String get type;
-  Widget build(BuildContext context);
-  @override
-  State<JsonRendererPlugin> createState() => _state;
-
+  static final _params = Ref<Map<String, dynamic>?>(null);
   @protected
   Map<String, dynamic> get params {
-    assert(_state._params != null, '');
-    return _state._params!;
+    assert(_params.current != null, '');
+    return _params.current!;
+  }
+
+  set params(Map<String, dynamic> p) {
+    // assert(_params == null, '');
+    _validateParams(p);
+    _params.current = p;
+  }
+
+  void _validateParams(
+    Map<String, dynamic> p, [
+    JsonRendererSchema? s,
+  ]) {
+    for (final MapEntry(:key, value: type) in (s ?? schema).entries) {
+      if (p[key] != null) {
+        if (type._map != null) {
+          _validateParams(p[key] as Map<String, dynamic>, type._map);
+        } else {
+          type.validate(p[key], key);
+        }
+      }
+    }
   }
 
   @protected
@@ -131,32 +162,5 @@ abstract class JsonRendererPlugin extends StatefulWidget {
       'name',
       'No enum value with name $name. Possible values are ${values.map((e) => e.name)}',
     );
-  }
-}
-
-class _JsonRendererPluginState extends State<JsonRendererPlugin> {
-  @override
-  Widget build(BuildContext context) => widget.build(context);
-  Map<String, dynamic>? _params;
-
-  set params(Map<String, dynamic> p) {
-    // assert(_params == null, '');
-    _validateParams(p);
-    _params = p;
-  }
-
-  void _validateParams(
-    Map<String, dynamic> p, [
-    JsonRendererSchema? s,
-  ]) {
-    for (final MapEntry(:key, value: type) in (s ?? widget.schema).entries) {
-      if (p[key] != null) {
-        if (type._map != null) {
-          _validateParams(p[key] as Map<String, dynamic>, type._map);
-        } else {
-          type.validate(p[key], key);
-        }
-      }
-    }
   }
 }
