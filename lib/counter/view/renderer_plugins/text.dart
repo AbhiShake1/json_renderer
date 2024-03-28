@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_renderer_test/counter/counter.dart';
 
 class JsonRendererTextPlugin extends JsonRendererPlugin {
-  JsonRendererTextPlugin({super.key});
+  const JsonRendererTextPlugin({super.key});
   @override
   JsonRendererSchema get schema => {
         'text': JsonRendererValidator.ofType(String),

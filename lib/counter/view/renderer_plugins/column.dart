@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_renderer_test/counter/counter.dart';
 
 class JsonRendererColumnPlugin extends JsonRendererPlugin {
-  JsonRendererColumnPlugin({super.key});
+  const JsonRendererColumnPlugin({super.key});
   @override
   JsonRendererSchema get schema => {
         'children': JsonRendererValidator.ofType(List<Widget>),
