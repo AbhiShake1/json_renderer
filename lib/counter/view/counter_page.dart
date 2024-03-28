@@ -73,11 +73,10 @@ class JsonRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_plugins);
     return _plugins.firstWhere(
       (p) => p.type == json['type'],
       orElse: () => throw Exception('type ${json['type']} not found'),
-    )..params = json;
+    ).._state.params = json;
   }
 }
 
@@ -107,36 +106,19 @@ class JsonRendererValidator {
   Map<String, JsonRendererValidator>? _map;
 }
 
-abstract class JsonRendererPlugin extends StatelessWidget {
+abstract class JsonRendererPlugin extends StatefulWidget {
   JsonRendererPlugin({super.key});
+  final _JsonRendererPluginState _state = _JsonRendererPluginState();
   JsonRendererSchema get schema;
   String get type;
-  Map<String, dynamic>? _params;
+  Widget build(BuildContext context);
+  @override
+  State<JsonRendererPlugin> createState() => _state;
+
   @protected
   Map<String, dynamic> get params {
-    assert(_params != null, '');
-    return _params!;
-  }
-
-  set params(Map<String, dynamic> p) {
-    // assert(_params == null, '');
-    _validateParams(p);
-    _params = p;
-  }
-
-  void _validateParams(
-    Map<String, dynamic> p, [
-    JsonRendererSchema? s,
-  ]) {
-    for (final MapEntry(:key, value: type) in (s ?? schema).entries) {
-      if (p[key] != null) {
-        if (type._map != null) {
-          _validateParams(p[key] as Map<String, dynamic>, type._map);
-        } else {
-          type.validate(p[key], key);
-        }
-      }
-    }
+    assert(_state._params != null, '');
+    return _state._params!;
   }
 
   @protected
@@ -149,5 +131,32 @@ abstract class JsonRendererPlugin extends StatelessWidget {
       'name',
       'No enum value with name $name. Possible values are ${values.map((e) => e.name)}',
     );
+  }
+}
+
+class _JsonRendererPluginState extends State<JsonRendererPlugin> {
+  @override
+  Widget build(BuildContext context) => widget.build(context);
+  Map<String, dynamic>? _params;
+
+  set params(Map<String, dynamic> p) {
+    // assert(_params == null, '');
+    _validateParams(p);
+    _params = p;
+  }
+
+  void _validateParams(
+    Map<String, dynamic> p, [
+    JsonRendererSchema? s,
+  ]) {
+    for (final MapEntry(:key, value: type) in (s ?? widget.schema).entries) {
+      if (p[key] != null) {
+        if (type._map != null) {
+          _validateParams(p[key] as Map<String, dynamic>, type._map);
+        } else {
+          type.validate(p[key], key);
+        }
+      }
+    }
   }
 }

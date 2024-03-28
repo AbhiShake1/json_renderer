@@ -12,7 +12,7 @@ class JsonRendererColumnPlugin extends JsonRendererPlugin {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final json in (params['children'] as List? ?? []))
+        for (final json in params['children'] as List? ?? [])
           if (json is Map<String, dynamic>) JsonRenderer(json),
       ],
     );
