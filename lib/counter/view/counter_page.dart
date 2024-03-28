@@ -114,8 +114,8 @@ class JsonRendererValidator {
   Map<String, JsonRendererValidator>? _map;
 }
 
-class Ref<T> {
-  Ref(this.current);
+class _Ref<T> {
+  _Ref(this.current);
 
   T? current;
 }
@@ -124,7 +124,7 @@ abstract class JsonRendererPlugin extends StatelessWidget {
   const JsonRendererPlugin({super.key});
   JsonRendererSchema get schema;
   String get type;
-  static final _params = Ref<Map<String, dynamic>?>(null);
+  static final _params = _Ref<Map<String, dynamic>?>(null);
   @protected
   Map<String, dynamic> get params {
     assert(_params.current != null, '');
