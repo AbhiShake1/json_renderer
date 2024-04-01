@@ -19,9 +19,14 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     JsonRenderer.init(
       plugins: [
+<<<<<<< HEAD
         JsonRendererTextPlugin(),
         JsonRendererColumnPlugin(),
         JsonRendererImagePlugin(),
+=======
+        const JsonRendererTextPlugin(),
+        const JsonRendererColumnPlugin(),
+>>>>>>> 3caf2dca6fa6d03d796df06255f655fe97c08da8
       ],
     );
     return Scaffold(
@@ -111,7 +116,8 @@ class JsonRendererValidator {
   factory JsonRendererValidator.ofType(Type type) {
     return JsonRendererValidator._()..type = type;
   }
-  factory JsonRendererValidator.fromMap(Map<String, JsonRendererValidator> map) {
+  factory JsonRendererValidator.fromMap(
+      Map<String, JsonRendererValidator> map) {
     return JsonRendererValidator._()
       ..type = Map
       .._map = map;
