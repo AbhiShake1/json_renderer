@@ -19,8 +19,7 @@ class JsonRendererTextPlugin extends JsonRendererPlugin {
     return Text(
       params['text']?.toString() ?? '',
       style: TextStyle(
-        fontStyle:
-            fontStyle == null ? null : enumByName(FontStyle.values, fontStyle),
+        fontStyle: fontStyle == null ? null : enumByName(FontStyle.values, fontStyle),
         fontSize: textStyle?['font_size'] as double?,
       ),
     );

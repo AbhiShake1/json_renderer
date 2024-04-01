@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_renderer_test/counter/view/renderer_plugins/column.dart';
+import 'package:json_renderer_test/counter/view/renderer_plugins/image.dart';
 import 'package:json_renderer_test/counter/view/renderer_plugins/text.dart';
 
 class CounterPage extends StatelessWidget {
@@ -20,6 +21,7 @@ class CounterView extends StatelessWidget {
       plugins: [
         JsonRendererTextPlugin(),
         JsonRendererColumnPlugin(),
+        JsonRendererImagePlugin(),
       ],
     );
     return Scaffold(
@@ -46,12 +48,26 @@ class CounterView extends StatelessWidget {
                 },
               },
               {
+                'type': 'image',
+                'height': 100.0,
+                'width': 100.0,
+                'path': 'assets/16.png',
+                'isNetwork': false,
+              },
+              {
                 'type': 'text',
                 'text': 'abcd',
                 'text_style': {
                   'font_style': 'italic',
                   'font_size': 24.0,
                 },
+              },
+              {
+                'type': 'image',
+                'height': 100.0,
+                'width': 100.0,
+                'path': 'assets/16.png',
+                'isNetwork': false,
               },
             ],
           },
@@ -121,7 +137,8 @@ class _Ref<T> {
 }
 
 abstract class JsonRendererPlugin extends StatelessWidget {
-  const JsonRendererPlugin({super.key});
+  // ignore: prefer_const_constructors_in_immutables
+  JsonRendererPlugin({super.key});
   JsonRendererSchema get schema;
   String get type;
   static final _params = _Ref<Map<String, dynamic>?>(null);
