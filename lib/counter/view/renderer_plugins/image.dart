@@ -24,6 +24,7 @@ class JsonRendererImagePlugin extends JsonRendererPlugin {
         height: height as double?,
         width: width as double?,
         child: !(isNetwork as bool? ?? true)
+            //TODO: replace with a placeholder image
             ? Image.asset(
                 isNull ? 'assets/16.png' : params['path'].toString(),
               )
