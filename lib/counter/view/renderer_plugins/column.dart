@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_renderer_test/counter/counter.dart';
 
 class JsonRendererColumnPlugin extends JsonRendererPlugin {
-  const JsonRendererColumnPlugin({super.key});
+  JsonRendererColumnPlugin({super.key});
   @override
   JsonRendererSchema get schema => {
         'children': JsonRendererValidator.ofType(List<Widget>),
@@ -12,7 +12,7 @@ class JsonRendererColumnPlugin extends JsonRendererPlugin {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final json in params['children'] as List? ?? [])
+        for (final json in getParam<List<dynamic>>('children') ?? [])
           if (json is Map<String, dynamic>) JsonRenderer(json),
       ],
     );

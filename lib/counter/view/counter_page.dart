@@ -19,14 +19,9 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     JsonRenderer.init(
       plugins: [
-<<<<<<< HEAD
         JsonRendererTextPlugin(),
         JsonRendererColumnPlugin(),
         JsonRendererImagePlugin(),
-=======
-        const JsonRendererTextPlugin(),
-        const JsonRendererColumnPlugin(),
->>>>>>> 3caf2dca6fa6d03d796df06255f655fe97c08da8
       ],
     );
     return Scaffold(
@@ -154,6 +149,18 @@ abstract class JsonRendererPlugin extends StatelessWidget {
     return _params.current!;
   }
 
+  @protected
+  T? getParam<T extends dynamic>(String key) {
+    final keyTree = key.split('.');
+    dynamic param;
+    for (final k in keyTree) {
+      param = param?[k];
+      if (param == null) return null;
+    }
+
+    return param as T?;
+  }
+
   set params(Map<String, dynamic> p) {
     // assert(_params == null, '');
     _validateParams(p);
@@ -173,6 +180,16 @@ abstract class JsonRendererPlugin extends StatelessWidget {
         }
       }
     }
+  }
+
+  @protected
+  E? enumByNameOrNull<E extends Enum>(Iterable<E> values, String? name) {
+    if (name == null) return null;
+
+    for (final v in values) {
+      if (v.name == name) return v;
+    }
+    return null;
   }
 
   @protected

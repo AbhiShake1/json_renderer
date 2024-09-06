@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:json_renderer_test/counter/counter.dart';
 
 class JsonRendererTextPlugin extends JsonRendererPlugin {
-  const JsonRendererTextPlugin({super.key});
+  JsonRendererTextPlugin({super.key});
+
   @override
   JsonRendererSchema get schema => {
         'text': JsonRendererValidator.ofType(String),
@@ -14,13 +15,17 @@ class JsonRendererTextPlugin extends JsonRendererPlugin {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = params['text_style'];
-    final fontStyle = textStyle?['font_style']?.toString();
+    final fontStyle = getParam<String>('text_style.font_style');
+    final fontSize = getParam<double>('text_style.font_size');
+    final text = getParam<String>('text');
+
+    if (text?.isEmpty ?? true) return const SizedBox();
+
     return Text(
-      params['text']?.toString() ?? '',
+      text!,
       style: TextStyle(
-        fontStyle: fontStyle == null ? null : enumByName(FontStyle.values, fontStyle),
-        fontSize: textStyle?['font_size'] as double?,
+        fontStyle: enumByNameOrNull(FontStyle.values, fontStyle),
+        fontSize: fontSize,
       ),
     );
   }

@@ -13,16 +13,16 @@ class JsonRendererImagePlugin extends JsonRendererPlugin {
 
   @override
   Widget build(BuildContext context) {
-    final height = params['height'];
-    final width = params['width'];
-    final isNetwork = params['isNetwork'];
-    final isNull = params['path'].toString() == 'null';
+    final height = getParam<double>('height');
+    final width = getParam<double>('width');
+    final isNetwork = getParam<bool>('isNetwork');
+    final isNull = getParam('path').toString() == 'null';
 
     return Transform.scale(
       scale: 5,
       child: SizedBox(
-        height: height as double?,
-        width: width as double?,
+        height: height,
+        width: width,
         child: !(isNetwork as bool? ?? true)
             //TODO: replace with a placeholder image
             ? Image.asset(
